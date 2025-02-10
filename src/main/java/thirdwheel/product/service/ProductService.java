@@ -25,21 +25,21 @@ public class ProductService {
                 .build();
 
         productRepository.save(product);
-        //log.info("Created product: {}", product.toString());
+        log.info("Created product: {}", product.toString());
     }
 
     public void getAllProducts() {
         List<Product> products = productRepository.findAll();
-        //log.info("Found {} products", products.size());
+        log.info("Found {} products", products.size());
     }
 
     public void getProductById(Long id) {
         try {
             Optional<Product> product = productRepository.findById(id);
-            //log.info("Found product: {}", product.toString());
+            log.info("Found product: {}", product.toString());
         }
         catch (Exception e) {
-            //log.error("Could not find product with id: {}", id);
+            log.error("Could not find product with id: {}", id);
         }
     }
 }
