@@ -25,7 +25,7 @@ public class ProductService {
                 .build();
 
         productRepository.save(product);
-        log.info("Created product: {}", product.toString());
+        log.info("Created product: {}", product.getName());
     }
 
     public void getAllProducts() {

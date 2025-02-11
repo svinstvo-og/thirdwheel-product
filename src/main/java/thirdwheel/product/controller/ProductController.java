@@ -33,7 +33,7 @@ public class ProductController {
         productService.createProduct(productRequest);
     }
 
-    @GetMapping("/{name}")
+    @GetMapping("/name/{name}")
     @ResponseStatus(HttpStatus.FOUND)
     public Product findProduct(@PathVariable String name) {
         if (productRepository.findByName(name) == null) {
