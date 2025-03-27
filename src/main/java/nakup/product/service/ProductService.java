@@ -1,11 +1,11 @@
-package thirdwheel.product.service;
+package nakup.product.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import thirdwheel.product.dto.ProductRequest;
-import thirdwheel.product.model.Product;
-import thirdwheel.product.repository.ProductRepository;
+import nakup.product.dto.ProductRequest;
+import nakup.product.model.Product;
+import nakup.product.repository.ProductRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +22,7 @@ public class ProductService {
                 .name(productRequest.getName())
                 .price(productRequest.getPrice())
                 .description(productRequest.getDescription())
+                .userId(productRequest.getUserId())
                 .build();
 
         productRepository.save(product);

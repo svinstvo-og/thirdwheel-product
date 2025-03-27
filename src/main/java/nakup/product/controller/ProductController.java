@@ -1,14 +1,14 @@
-package thirdwheel.product.controller;
+package nakup.product.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import thirdwheel.product.dto.ProductRequest;
-import thirdwheel.product.model.Product;
-import thirdwheel.product.repository.ProductRepository;
-import thirdwheel.product.service.ProductService;
+import nakup.product.dto.ProductRequest;
+import nakup.product.model.Product;
+import nakup.product.repository.ProductRepository;
+import nakup.product.service.ProductService;
 
 import java.util.List;
 

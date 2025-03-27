@@ -1,4 +1,4 @@
-package thirdwheel.product.model;
+package nakup.product.model;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -12,7 +12,7 @@ import java.math.BigInteger;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "thirdwheel-product")
+@Table(name = "nakup-product")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,6 +20,7 @@ public class Product {
 
     @Column(nullable = false, unique = true)
     private String name;
+    private Long sellerId;
     private String description;
     private BigDecimal price;
     private String imageUrl;

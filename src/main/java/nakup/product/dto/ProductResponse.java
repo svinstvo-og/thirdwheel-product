@@ -1,4 +1,4 @@
-package thirdwheel.product.dto;
+package nakup.product.dto;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,4 +22,5 @@ public class ProductResponse {
     private String description;
     private BigDecimal price;
     private String imageUrl;
+    private Long sellerId;
 }

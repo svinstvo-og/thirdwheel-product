@@ -1,4 +1,4 @@
-package thirdwheel.product.dto;
+package nakup.product.dto;
 
 import jakarta.persistence.Id;
 import lombok.*;
@@ -14,4 +14,5 @@ public class ProductRequest {
     private String description;
     private BigDecimal price;
     private String imageUrl;
+    private Long sellerId;
 }
