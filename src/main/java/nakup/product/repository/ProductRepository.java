@@ -7,4 +7,6 @@ import nakup.product.model.Product;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
     public Product findByName(String name);
+
+    //public Product findById(Long id);
 }

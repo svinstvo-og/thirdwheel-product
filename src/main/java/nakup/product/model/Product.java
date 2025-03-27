@@ -24,4 +24,7 @@ public class Product {
     private String description;
     private BigDecimal price;
     private String imageUrl;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Category category;
 }

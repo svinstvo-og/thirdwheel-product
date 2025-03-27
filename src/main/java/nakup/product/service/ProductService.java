@@ -22,7 +22,7 @@ public class ProductService {
                 .name(productRequest.getName())
                 .price(productRequest.getPrice())
                 .description(productRequest.getDescription())
-                .userId(productRequest.getUserId())
+                .sellerId(productRequest.getSellerId())
                 .build();
 
         productRepository.save(product);
@@ -43,4 +43,6 @@ public class ProductService {
             log.error("Could not find product with id: {}", id);
         }
     }
+
+    public void validateProduct(Long productId) {}
 }

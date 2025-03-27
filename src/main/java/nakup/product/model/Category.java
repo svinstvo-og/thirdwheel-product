@@ -19,6 +19,8 @@ public class Category {
 
     private String name;
 
+    private String description;
+
     @OneToMany(mappedBy = "categories", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Product> products;
 
