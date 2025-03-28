@@ -3,6 +3,7 @@ package nakup.product.controller;
 import nakup.product.dto.CategoryCreateRequest;
 import nakup.product.dto.CategoryExtendedResponse;
 import nakup.product.dto.CategoryGetRequest;
+import nakup.product.dto.CategoryShortResponse;
 import nakup.product.model.Category;
 import nakup.product.repository.CategoryRepository;
 import nakup.product.repository.ProductRepository;
@@ -44,8 +45,9 @@ public class CategoryController {
     }
 
     @GetMapping("/")
-    public Category getCategory(@RequestBody CategoryGetRequest request) {
-        return categoryService.validateCategory(request.getCategoryId());
+    public CategoryShortResponse getCategory(@RequestBody CategoryGetRequest request) {
+        Category category = categoryService.validateCategory(request.getCategoryId());
+        return new CategoryShortResponse(category, categoryService);
     }
 
     @GetMapping("/x/")
