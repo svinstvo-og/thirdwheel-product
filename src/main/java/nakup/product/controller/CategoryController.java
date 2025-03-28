@@ -7,6 +7,8 @@ import nakup.product.repository.ProductRepository;
 import nakup.product.service.CategoryService;
 import nakup.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,8 +28,16 @@ public class CategoryController {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    public void createCategory(CategoryCreateRequest request) {
-        Category category = categoryService.validateCategoty(request.getParentId());
+    @PostMapping("/")
+    public void createCategory(@RequestBody CategoryCreateRequest request) {
+        Category category;
+
+        if (request.getParentId() != null) {
+            category = categoryService.validateCategory(request.getParentId());
+        }
+        else {
+            category = null;
+        }
 
         categoryService.createCategory(request, category);
     }

@@ -18,7 +18,7 @@ public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    public Category validateCategoty(Long id) {
+    public Category validateCategory(Long id) {
         if (categoryRepository.findById(id).isPresent()) {
             return categoryRepository.findById(id).get();
         }
