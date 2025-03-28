@@ -1,16 +1,17 @@
 package nakup.product.controller;
 
 import nakup.product.dto.CategoryCreateRequest;
+import nakup.product.dto.CategoryExtendedResponse;
+import nakup.product.dto.CategoryGetRequest;
 import nakup.product.model.Category;
 import nakup.product.repository.CategoryRepository;
 import nakup.product.repository.ProductRepository;
 import nakup.product.service.CategoryService;
 import nakup.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/product/category")
@@ -42,4 +43,14 @@ public class CategoryController {
         categoryService.createCategory(request, category);
     }
 
+    @GetMapping("/")
+    public Category getCategory(@RequestBody CategoryGetRequest request) {
+        return categoryService.validateCategory(request.getCategoryId());
+    }
+
+    @GetMapping("/x/")
+    public CategoryExtendedResponse getExtendedCategory(@RequestBody CategoryGetRequest request) {
+        Category category = categoryService.validateCategory(request.getCategoryId());
+        return categoryService.getExtendedCategory(category);
+    }
 }

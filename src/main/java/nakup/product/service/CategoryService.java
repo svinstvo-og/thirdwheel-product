@@ -3,12 +3,15 @@ package nakup.product.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import nakup.product.dto.CategoryCreateRequest;
+import nakup.product.dto.CategoryExtendedResponse;
 import nakup.product.model.Category;
 import nakup.product.repository.CategoryRepository;
+import nakup.product.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -17,6 +20,9 @@ public class CategoryService {
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private ProductRepository productRepository;
 
     public Category validateCategory(Long id) {
         if (categoryRepository.findById(id).isPresent()) {
@@ -42,5 +48,31 @@ public class CategoryService {
         category.setProducts(new ArrayList<>());
 
         categoryRepository.save(category);
+    }
+
+    public CategoryExtendedResponse getExtendedCategory(Category category) {
+        List<CategoryExtendedResponse> parentCategories = getParentCategories(category, new ArrayList<>());
+
+        CategoryExtendedResponse extendedCategory = new CategoryExtendedResponse(category, parentCategories, getChildrenCategories(category));
+        return extendedCategory;
+    }
+
+    public List<CategoryExtendedResponse> getParentCategories(Category category, List<CategoryExtendedResponse> parentCategories) {
+        if (category.getParent() != null) {
+            CategoryExtendedResponse parent = new CategoryExtendedResponse(category.getParent());
+            parentCategories.add(parent);
+            getParentCategories(category.getParent(), parentCategories);
+        }
+        return parentCategories;
+    }
+
+    public List<CategoryExtendedResponse> getChildrenCategories(Category category) {
+        List<CategoryExtendedResponse> childrenCategories = new ArrayList<>();
+
+        for (Category child : categoryRepository.findCategoriesByParentId(category.getId())) {
+            childrenCategories.add(new CategoryExtendedResponse(child));
+        }
+
+        return childrenCategories;
     }
 }
