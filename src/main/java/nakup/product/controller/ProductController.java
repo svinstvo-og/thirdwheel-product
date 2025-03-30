@@ -1,6 +1,10 @@
 package nakup.product.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import nakup.product.dto.ProductsByCategoryRequest;
+import nakup.product.model.Category;
+import nakup.product.repository.CategoryRepository;
+import nakup.product.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +27,12 @@ public class ProductController {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
+
+    @Autowired
+    private CategoryService categoryService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -51,5 +61,18 @@ public class ProductController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No products found");
         }
         return productRepository.findAll();
+    }
+
+    @GetMapping
+    public List<Product> getProductsByCategory(@RequestBody ProductsByCategoryRequest request) {
+        Category category;
+        if (request.getCategoryId() == null) {
+            category = categoryService.validateCategory(request.getName());
+        }
+        else {
+            category = categoryService.validateCategory(request.getCategoryId());
+        }
+
+        return categoryRepository.findProductsByCategory(category);
     }
 }

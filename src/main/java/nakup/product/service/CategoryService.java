@@ -33,6 +33,15 @@ public class CategoryService {
         }
     }
 
+    public Category validateCategory(String name) {
+        if (categoryRepository.findByName(name) != null) {
+            return categoryRepository.findByName(name);
+        }
+        else {
+            throw new NoSuchFieldError("No such category found");
+        }
+    }
+
     public void createCategory(CategoryCreateRequest request, Category parent) {
         Category category = new Category();
         category.setName(request.getName());
