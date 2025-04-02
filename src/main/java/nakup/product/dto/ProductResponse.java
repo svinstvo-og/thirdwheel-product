@@ -33,6 +33,12 @@ public class ProductResponse {
         this.price = product.getPrice();
         this.imageUrl = product.getImageUrl();
         this.sellerId = product.getSellerId();
-        this.categoryId = product.getCategory().getId();
+
+        if (product.getCategory() != null) {
+            this.categoryId = product.getCategory().getId();
+        }
+        else {
+            this.categoryId = null;
+        }
     }
 }

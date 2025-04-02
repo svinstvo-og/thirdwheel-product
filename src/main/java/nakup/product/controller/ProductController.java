@@ -57,10 +57,6 @@ public class ProductController {
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.FOUND)
     public List<ProductResponse> findAllProducts() {
-        if (productRepository.findAll().isEmpty()) {
-            log.info("No products found");
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No products found");
-        }
         return productService.getAllProducts();
     }
 
