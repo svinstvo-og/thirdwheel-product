@@ -56,11 +56,13 @@ public class CategoryController {
     @GetMapping("/hierarchy")
     public List<CategoryHierarchyRequest> getCategoryHierarchy(@RequestBody CategoryGetRequest request) {
         if (request.getCategoryId() != null) {
+            System.out.println("Request category id: " + request.getCategoryId());
             Category category = categoryService.validateCategory(request.getCategoryId());
             return categoryService.getHierarchy(category);
         }
         else {
-            return categoryService.getHierarchy(null);
+            System.out.println("Request category id is NULLLLLLLL");
+            return categoryService.getHierarchy();
         }
     }
 }

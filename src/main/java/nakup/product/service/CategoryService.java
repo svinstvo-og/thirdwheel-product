@@ -92,10 +92,21 @@ public class CategoryService {
         List<Category> categories = categoryRepository.findAll();
 
         for (Category category : categories) {
-            if (topCategory != null && category.getParent().getId().equals(topCategory.getId())) {
+            if (category.getParent() != null && category.getParent().getId().equals(topCategory.getId())) {
                 hierarchy.add(new CategoryHierarchyRequest(category));
             }
-            else if (category.getParent() == null) {
+        }
+
+        return hierarchy;
+    }
+
+    public List<CategoryHierarchyRequest> getHierarchy() {
+        List<CategoryHierarchyRequest> hierarchy = new ArrayList<>();
+
+        List<Category> categories = categoryRepository.findAll();
+
+        for (Category category : categories) {
+            if (category.getParent() == null) {
                 hierarchy.add(new CategoryHierarchyRequest(category));
             }
         }
