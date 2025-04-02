@@ -22,15 +22,15 @@ public class CategoryExtendedResponse {
 //    private List<Category> children;
 //    private Category parent;
 
-    private List<CategoryExtendedResponse> parentCategories;
+    private Long parentCategoryId;
     private List<CategoryExtendedResponse> childrenCategories;
 
-    public CategoryExtendedResponse(Category category, List<CategoryExtendedResponse> parentCategories, List<CategoryExtendedResponse> childrenCategories) {
+    public CategoryExtendedResponse(Category category, Long parentCategoryId, List<CategoryExtendedResponse> childrenCategories) {
         this.id = category.getId();
         this.name = category.getName();
         this.description = category.getDescription();
         this.products = category.getProducts();
-        this.parentCategories = parentCategories;
+        this.parentCategoryId = parentCategoryId;
         this.childrenCategories = childrenCategories;
 //        this.children = category.getChildren();
 //        this.parent = category.getParent();

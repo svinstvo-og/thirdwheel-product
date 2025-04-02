@@ -1,6 +1,7 @@
 package nakup.product.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import nakup.product.dto.ProductResponse;
 import nakup.product.dto.ProductsByCategoryRequest;
 import nakup.product.model.Category;
 import nakup.product.repository.CategoryRepository;
@@ -55,12 +56,12 @@ public class ProductController {
 
     @GetMapping("/all")
     @ResponseStatus(HttpStatus.FOUND)
-    public List<Product> findAllProducts() {
+    public List<ProductResponse> findAllProducts() {
         if (productRepository.findAll().isEmpty()) {
             log.info("No products found");
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No products found");
         }
-        return productRepository.findAll();
+        return productService.getAllProducts();
     }
 
     @GetMapping
@@ -73,6 +74,6 @@ public class ProductController {
             category = categoryService.validateCategory(request.getCategoryId());
         }
 
-        return categoryRepository.findProductsByCategory(category);
+        return categoryService.getProductsByCategory(category);
     }
 }

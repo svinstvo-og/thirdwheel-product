@@ -1,9 +1,6 @@
 package nakup.product.controller;
 
-import nakup.product.dto.CategoryCreateRequest;
-import nakup.product.dto.CategoryExtendedResponse;
-import nakup.product.dto.CategoryGetRequest;
-import nakup.product.dto.CategoryShortResponse;
+import nakup.product.dto.*;
 import nakup.product.model.Category;
 import nakup.product.repository.CategoryRepository;
 import nakup.product.repository.ProductRepository;
@@ -50,9 +47,20 @@ public class CategoryController {
         return new CategoryShortResponse(category, categoryService);
     }
 
-    @GetMapping("/x/")
+    @GetMapping("/extended")
     public CategoryExtendedResponse getExtendedCategory(@RequestBody CategoryGetRequest request) {
         Category category = categoryService.validateCategory(request.getCategoryId());
         return categoryService.getExtendedCategory(category);
+    }
+
+    @GetMapping("/hierarchy")
+    public List<CategoryHierarchyRequest> getCategoryHierarchy(@RequestBody CategoryGetRequest request) {
+        if (request.getCategoryId() != null) {
+            Category category = categoryService.validateCategory(request.getCategoryId());
+            return categoryService.getHierarchy(category);
+        }
+        else {
+            return categoryService.getHierarchy(null);
+        }
     }
 }

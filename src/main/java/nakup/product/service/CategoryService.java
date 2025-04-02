@@ -4,7 +4,9 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import nakup.product.dto.CategoryCreateRequest;
 import nakup.product.dto.CategoryExtendedResponse;
+import nakup.product.dto.CategoryHierarchyRequest;
 import nakup.product.model.Category;
+import nakup.product.model.Product;
 import nakup.product.repository.CategoryRepository;
 import nakup.product.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,10 +62,19 @@ public class CategoryService {
     }
 
     public CategoryExtendedResponse getExtendedCategory(Category category) {
-        List<CategoryExtendedResponse> parentCategories = getParentCategories(category, new ArrayList<>());
+        //List<CategoryExtendedResponse> parentCategories = getParentCategories(category, new ArrayList<>());
 
-        CategoryExtendedResponse extendedCategory = new CategoryExtendedResponse(category, parentCategories, getChildrenCategories(category));
-        return extendedCategory;
+        return new CategoryExtendedResponse(category, category.getParent().getId(), getChildren(category));
+    }
+
+    public List<CategoryExtendedResponse> getChildren(Category category) {
+        List<CategoryExtendedResponse> childrenCategories = new ArrayList<>();
+
+        for (Category child : categoryRepository.findCategoriesByParentId(category.getId())) {
+            childrenCategories.add(new CategoryExtendedResponse(child));
+        }
+
+        return childrenCategories;
     }
 
     public List<CategoryExtendedResponse> getParentCategories(Category category, List<CategoryExtendedResponse> parentCategories) {
@@ -75,13 +86,24 @@ public class CategoryService {
         return parentCategories;
     }
 
-    public List<CategoryExtendedResponse> getChildrenCategories(Category category) {
-        List<CategoryExtendedResponse> childrenCategories = new ArrayList<>();
+    public List<CategoryHierarchyRequest> getHierarchy(Category topCategory) {
+        List<CategoryHierarchyRequest> hierarchy = new ArrayList<>();
 
-        for (Category child : categoryRepository.findCategoriesByParentId(category.getId())) {
-            childrenCategories.add(new CategoryExtendedResponse(child));
+        List<Category> categories = categoryRepository.findAll();
+
+        for (Category category : categories) {
+            if (topCategory != null && category.getParent().getId().equals(topCategory.getId())) {
+                hierarchy.add(new CategoryHierarchyRequest(category));
+            }
+            else if (category.getParent() == null) {
+                hierarchy.add(new CategoryHierarchyRequest(category));
+            }
         }
 
-        return childrenCategories;
+        return hierarchy;
+    }
+
+    public List<Product> getProductsByCategory(Category category) {
+        return category.getProducts();
     }
 }

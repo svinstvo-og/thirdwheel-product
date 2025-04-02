@@ -1,6 +1,5 @@
 package nakup.product.dto;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,7 +7,6 @@ import lombok.NoArgsConstructor;
 import nakup.product.model.Category;
 import nakup.product.model.Product;
 import nakup.product.service.CategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +30,6 @@ public class CategoryShortResponse {
         this.description = category.getDescription();
         this.products = category.getProducts();
         this.parentCategoriesNumber = (categoryService.getParentCategories(category, new ArrayList<>())).toArray().length;
-        this.childrenCategoriesNumber = (categoryService.getChildrenCategories(category)).toArray().length;
+        //this.childrenCategoriesNumber = (categoryService.getHierachy(category)).toArray().length;
     }
 }
