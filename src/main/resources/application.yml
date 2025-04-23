@@ -1,10 +1,29 @@
 spring:
   application:
-    name: product
+    name: product-service
   datasource:
     url: jdbc:postgresql://localhost:5432/nakup-product
     username: postgres
     password: zxca
+
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:29092
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring:
+          json:
+            value:
+              default:
+                #TODO
+            use:
+              type:
+                headers: false
+            trusted:
+              packages: "*"
+            use-type-headers: false
+
 
 
 jpa:
