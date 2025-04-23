@@ -15,6 +15,9 @@ public class OrderCreatedListener {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private UnitPriceUpdatePublisher unitPriceUpdatePublisher;
+
     private final String TOPIC = "order-created";
 
     @KafkaListener(topics = TOPIC, groupId = "product-service", properties = {"spring.json.value.default.type=nakup.product.model.event.OrderCreatedEvent"})
@@ -24,7 +27,7 @@ public class OrderCreatedListener {
         HashMap<Long, Double> unitPrices = productService.getPrices(event.items().keySet().stream().toList());
         UnitPriceUpdateEvent unitPriceUpdateEvent = new UnitPriceUpdateEvent(event.orderId(), event.userId(), unitPrices);
 
-        //Publish event
+        unitPriceUpdatePublisher.unitPriceUpdate(unitPriceUpdateEvent);
     }
 
 }
